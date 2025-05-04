@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University QnA Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chatbox">
+        <h2>University Admission QnA Bot</h2>
+        <div id="chatlog"></div>
+        <input type="text" id="user_input" placeholder="Ask a question..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("user_input").value;
+            const log = document.getElementById("chatlog");
+
+            log.innerHTML += `<p><strong>You:</strong> ${input}</p>`;
+            document.getElementById("user_input").value = "";
+
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: input })
+            })
+            .then(res => res.json())
+            .then(data => {
+                log.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
