@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Admission Chatbot</title>
+    </head>
+    
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        #chatbox { width: 100%; max-width: 500px; margin: auto; }
+        .message { margin: 10px 0; }
+        .user { text-align: right; }
+        .bot { text-align: left; }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <h2>University Admission Chatbot</h2>
+        <div id="chatlog"></div>
+        <input type="text" id="user_input" placeholder="Ask me something..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("user_input").value;
+            const chatlog = document.getElementById("chatlog");
+
+            chatlog.innerHTML += `<div class='message user'>You: ${userInput}</div>`;
+            document.getElementById("user_input").value = "";
+
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(res => res.json())
+            .then(data => {
+                chatlog.innerHTML += `<div class='message bot'>Bot: ${data.response}</div>`;
+            });
+        }
+    </script>
+</body>
+</html>
