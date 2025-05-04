@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ recipe.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .recipe-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .recipe-details img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .ingredients {
+            margin-top: 20px;
+            list-style-type: none;
+        }
+        .instructions {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ recipe.title }}</h1>
+    <div class="recipe-details">
+        <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+        <h2>Ingredients</h2>
+        <ul class="ingredients">
+            {% for ingredient in recipe.extendedIngredients %}
+                <li>{{ ingredient.original }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Instructions</h2>
+        <p>{{ recipe.instructions }}</p>
+        <p><strong>Preparation Time:</strong> {{ recipe.readyInMinutes }} minutes</p>
+    </div>
+</body>
+</html>
